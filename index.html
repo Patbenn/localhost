@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="hostApp">
+	<head>
+		<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Hello World</title>
+    
+    <!-- !BOOTSTRAP STYLESHEETS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/glyphicons.css" rel="stylesheet">
+    
+	</head>
+	<body ng-controller="hostController">
+		<div class="container mt-sm-3 mb-sm-3 py-2">
+			<div class="row">
+				<div class="zero-clipboard">
+					<span class="btn-clipboard">
+						<a href="settings.html">
+							<icon class="glyphicon glyphicon-cog" aria-hidden="true"></icon>
+							Settings
+						</a>
+					</span>
+				</div>
+				<div class="col-xs-12 col-md-12 pt-5 pb-2 pl-5 header">
+		  		<h2>My Local Sites</h2>
+				</div>
+			</div>
+			<div class="row mb-4">
+					<nav class="navbar navbar-light navbar-toggleable-md bg-faded col-md-12">
+						<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<a class="navbar-brand" href="#">
+							<icon class="glyphicon glyphicon-globe" aria-hidden="true"></icon>
+							Quicklinks
+						</a>
+						<div id="navbarNav" class="collapse navbar-collapse">
+							<ul class="navbar-nav">
+								<li class="nav-item" ng-repeat="item in items">
+									<a class="nav-link btn-sm btn-primary" href="{{ item.URL }}" target="_blank">{{ item.LABEL }}</a>
+								</li>
+								<li class="nav-item">
+								<button type="button" class="btn btn-primary btn-sm dropdown-toggle float-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    Articles <span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu">
+							    <li><a href="#">Action</a></li>
+							    <li><a href="#">Another action</a></li>
+							    <li><a href="#">Something else here</a></li>
+							    <li><a href="#">Separated link</a></li>
+							  </ul>
+							</ul>
+		  		</div>
+			</div>
+			<div class="row mb-4" ng-repeat="category in categories">
+				<div class="col-xs-12 col-md-12">
+		  		<h4>{{ category.LABEL }}</h4>
+		  		<input type="hidden" ng-model="filterItem" ng-init="filterItem=category.ID" value="{{ category.ID }}">
+					<ul class="list-group project-list">
+						<li class="list-group-item col-lg-4 col-md-6 col-sm-12" ng-repeat="project in projects | filter: { CATEGORY: filterItem }">
+							<a class="site" href="http://{{ project.SUBDOMAIN }}.localhost:80">
+								<img src="http://{{ project.SUBDOMAIN }}.localhost:80/favicon.ico" alt="P">
+								{{ project.LABEL }}
+							</a>
+						</li>
+					</ul>		  		
+				</div>
+			</div>
+		</div>
+		
+		<!-- !SCRIPTS-->
+	  <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	  <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+	</body>
+</html>

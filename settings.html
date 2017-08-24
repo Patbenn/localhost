@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="hostApp">
+	<head>
+		<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Settings | Hello World.</title>
+    
+    <!-- !BOOTSTRAP STYLESHEETS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/glyphicons.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    
+	</head>
+	<body ng-controller="hostController" id="hostController">
+		<div class="container rounded mt-sm-3 py-2">
+			<div class="row">
+				<div class="zero-clipboard">
+					<span class="btn-clipboard">
+						<a href="index.php">
+							<icon class="glyphicon glyphicon-arrow-left" aria-hidden="true"></icon>
+							back
+						</a>
+					</span>
+				</div>
+				<div class="col-xs-12 col-md-12 pt-5 pb-2 pl-5 header">
+		  		<h2>My Local Sites</h2>
+				</div>
+			</div>
+			<div class="row mb-4">
+					<nav class="navbar navbar-light navbar-toggleable-sm bg-faded col-md-12">
+						<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<a class="navbar-brand" href="#">
+							<icon class="glyphicon glyphicon-cog" aria-hidden="true"></icon>
+							Settings
+						</a>
+						<div id="navbarNav" class="collapse navbar-collapse">
+							<ul class="navbar-nav">
+								<li class="nav-item">
+									<a class="nav-link btn-sm btn-secondary active" href="#">Quicklinks</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link btn-sm btn-secondary" href="#">Project Categories</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link btn-sm btn-secondary" href="#">Projects</a>
+								</li>
+							</ul>
+		  		</div>
+			</div>
+			<div class="row mb-4">
+				<div class="col-xs-12 col-md-12">
+		  		<h4>Quicklinks</h4>
+					<ul id="sortable" class="list-group">
+		  			<li class="Anchor topAnchor list-group-item add-list-item mb-4 rounded ui-state-default">		  			
+		  				<form class="form-inline" name="quickLinks">
+					  		<div class="input-group input-group-sm col-sm-12 col-md-5 px-1">
+							  	<span class="input-group-addon" id="sizing-addon1">label</span>
+									<input type="text" class="form-control" ng-model="siteLabel" placeholder="site name here" aria-describedby="sizing-addon1" required>
+								</div>
+								<div class="input-group input-group-sm col-sm-9 col-md-6 mt-sm-1 px-1">
+								  <span class="input-group-addon" id="sizing-addon1">url</span>
+								  <input type="text" class="form-control" ng-model="siteURL" placeholder="http://www.website.com" aria-describedby="sizing-addon1" required>
+								</div>
+						  	<div class="input-group input-group-sm col-sm-3 col-md-1 mt-sm-1 px-1">
+								  <button class="btn btn-sm col-12 btn-success" type="submit" ng-click="addQuicklink(siteLabel, siteURL); siteLabel = null; siteURL = null" ng-disabled="quickLinks.$invalid">Add</button>
+								</div>
+		  				</form>
+						</li>
+					  <li name="siteListItem" id="{{$index + 1}}" class="list-group-item ui-state-default" ng-repeat="item in items" ng-class="{changed: item.status}">
+					  	<form class="form-inline" name="quickLink{{ item.ID }}">
+						  	<div class="input-group input-group-sm col-sm-12 col-md-5 col-lg-5 px-1">
+								  <span class="input-group-addon" id="sizing-addon1">label</span>
+								  <input type="text" class="form-control" ng-model="siteLabel" name="siteLabel" ng-init="siteLabel=item.LABEL" value="{{ item.LABEL }}" aria-describedby="sizing-addon1" ng-change="item.status = true" required>
+								</div>
+						  	<div class="input-group input-group-sm col-sm-10 col-md-6 col-lg-6 mt-sm-1 px-1">
+								  <span class="input-group-addon" id="sizing-addon1">url</span>
+								  <input type="text" class="form-control" ng-model="siteURL" name="siteURL" ng-init="siteURL=item.URL" value="{{ item.URL }}" aria-describedby="sizing-addon1" ng-change="item-status = true" required>
+								</div>
+						  	<div class="input-group input-group-sm col-sm-2 col-md-1 col-lg-1 mt-sm-1 px-1 edit-group">
+								  <button class="btn btn-sm save-button" type="submit" ng-click="updateQuickLink(item.ID, siteLabel, siteURL, siteOrder); item.status = false;" class="green mr-1" ng-disabled="quickLink{{ item.ID }}.$pristine"><i class="fa fa-check-circle"></i></button>
+								  <a ng-click="deleteQuicklink(item.ID)" class="red mr-3"><i class="fa fa-minus-circle"></i></a> 
+								  <a ng-click="deleteQuicklink(item.ID)" class="float-right sorter-icon"><i class="fa fa-sort"></i></a> 
+								</div>
+					  	</form>
+					  </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<!-- !BOOTSTRAP SCRIPTS-->
+		<script src="js/Sortable.min.js"></script>
+	    <script src="//code.jquery.com/jquery-1.5.2.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	  <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript">
+	    $('li a').click(function(e) {
+	        e.preventDefault();
+	        $('a').removeClass('active');
+	        $(this).addClass('active');
+	    });
+		</script>
+		<script>
+		  $(document).ready(function() {
+		    $( "#sortable" ).sortable({
+			    items: 'li:not(.Anchor)',
+			    cursor: 'move',
+			    handle: '.sorter-icon',
+			    change: function() {
+            var list = $(this).closest('ul');
+            var topAnchor = $(list).find('.topAnchor');
+            $(list).prepend($(topAnchor).detach());
+          },
+          stop: function(event, ui){
+          	var newListOrder = $(this).sortable('toArray', { attribute: 'id' } );
+          	angular.element(document.getElementById('hostController')).scope().doAThing(newListOrder, 'new');
+	        }
+		    });
+		    $("#sortable").disableSelection();
+		  } );
+		</script>
+	</body>
+</html>
